@@ -1,36 +1,165 @@
-# CrossFriends — Amis, messages prives et courrier inter-serveur
+# 🤝 CordFriends - Friend System for BungeeCord
 
-Deux modules Maven independants :
+Transformez votre réseau BungeeCord avec un système d'amis complet, des messages privés inter-serveurs et une interface graphique intuitive ! 🚀
 
-| Dossier | Ou l'installer | Obligatoire ? |
-|---|---|---|
-| `crossfriends-bungee/` | Sur le **proxy BungeeCord** | Oui — contient toute la logique |
-| `crossfriends-spigot/` | Sur **chaque serveur backend** (Spigot/Paper) | Non — ajoute juste l'interface graphique `/friend gui` |
 
-Voir le `README.md` de chaque dossier pour le detail des commandes, de la configuration et des instructions de compilation/installation.
+## 📦 Installation
 
-## Demarrage rapide
+L'installation est simple :
+
+
+### 1️⃣ Côté BungeeCord
+📂 Placez le plugin dans le dossier :
+
+
+```
+/plugins
+```
+
+
+Puis redémarrez votre proxy BungeeCord.
+
+
+### 2️⃣ Côté Spigot / Paper
+Installez également la version Spigot/Paper du plugin sur chaque serveur de votre réseau.
+
+
+Après l'installation, redémarrez chaque serveur afin que toutes les fonctionnalités soient opérationnelles.
+
+
+⚠️ Les deux parties (BungeeCord + Spigot/Paper) sont obligatoires pour un fonctionnement complet.
+
+
+## ✅ Compatibilité
+
+🖥️ Compatible avec ChestCommands
+
+
+Pour ouvrir directement l'interface graphique, utilisez la commande :
+
+
+```
+op: execute as @s run friend gui
+```
+
+
+## 👥 Système d'amis
+
+Gérez facilement votre liste d'amis avec :
+
+
+```
+/friend add
+/friend accept
+/friend deny
+/friend remove
+/friend list
+/friend requests
+```
+
+✨ Lorsqu'un joueur vous envoie une demande d'ami, des boutons cliquables permettent d'accepter ou de refuser instantanément.
+
+
+## 🚫 Système de blocage
+
+Empêchez certains joueurs de vous contacter :
+
+
+```
+/friend block
+/friend unblock
+/friend blocked
+```
+
+Un joueur bloqué ne pourra plus :
+
+
+❌ Vous envoyer une demande d'ami
+❌ Vous envoyer un message privé
+❌ Vous envoyer un courrier
+
+
+## 💬 Messages privés inter-serveurs
+
+Communiquez avec n'importe quel joueur du réseau grâce aux commandes :
+
+
+```
+/msg
+/r
+```
+
+⚡ Les messages sont envoyés instantanément, même si le joueur se trouve sur un autre serveur.
+
+
+📬 Si le destinataire est hors ligne, le message est automatiquement enregistré en courrier.
+
+
+## ✉️ Courrier hors-ligne
+
+Envoyez des messages même lorsqu'un joueur est déconnecté :
+
+
+```
+/mail send
+/mail read
+/mail clear
+```
+
+Par défaut, tous les joueurs peuvent envoyer un courrier, qu'ils soient amis ou non.
+
+
+⚙️ Ce comportement est entièrement configurable.
+
+
+## 🎯 Auto-complétion intelligente
+
+Toutes les commandes disposent d'une auto-complétion (TAB) :
+
+
+✅ Sous-commandes
+✅ Noms des joueurs concernés
+
+
+Une utilisation beaucoup plus rapide et agréable.
+
+
+## 🖥️ Interface graphique
+
+Ouvrez le menu avec :
+
+
+```
+/friend gui
+```
+
+Depuis cette interface, vous pouvez :
+
+
+👥 Voir votre liste d'amis
+🎮 Rejoindre un ami en un clic
+💬 Lui envoyer un message privé directement
+
+
+## 🌐 Fonctionnement sur tout le réseau
+
+Toute la logique du plugin est gérée directement par BungeeCord, qui centralise les informations de l'ensemble de votre réseau.
+
+
+Cela permet de profiter de toutes les fonctionnalités entre tous vos serveurs, de manière totalement transparente.
+
+
+✨ Une seule installation sur le proxy suffit pour synchroniser les amis, les messages privés et le courrier sur l'ensemble du réseau.
+
+
+## 📥 Téléchargement
+
+Téléchargez les fichiers JAR depuis la page des [releases](https://github.com/herocraftlol/CordFriends/releases).
+
+
+## 🛠️ Compilation
 
 ```bash
 cd crossfriends-bungee && mvn clean package
 cd ../crossfriends-spigot && mvn clean package
 ```
-
-Puis :
-1. `crossfriends-bungee/target/crossfriends-bungee.jar` → `plugins/` du proxy BungeeCord → redemarrer le proxy.
-2. (Optionnel) `crossfriends-spigot/target/crossfriends-spigot.jar` → `plugins/` de chaque serveur backend ou vous voulez l'interface graphique → verifier `bungeecord: true` dans `spigot.yml` → redemarrer.
-
-## Ce que ca apporte
-
-- **Amis** : `/friend add|accept|deny|remove|list|requests`, avec boutons cliquables a la reception d'une demande.
-- **Blocage** : `/friend block|unblock|blocked` — un joueur bloque ne peut plus envoyer de demande d'ami, de message prive ni de mail.
-- **Messages prives inter-serveur** : `/msg`, `/r` — livres instantanement si le destinataire est en ligne (n'importe quel serveur), sinon sauvegardes comme courrier.
-- **Courrier hors-ligne pour tous** : `/mail send|read|clear` — par defaut ouvert a n'importe quel joueur, ami ou non (reglable).
-- **Autocompletion (tab)** sur toutes les commandes : sous-commandes puis noms de joueurs pertinents.
-- **Interface graphique** (module Spigot) : `/friend gui` ouvre un menu avec vos amis, pour les rejoindre en un clic ou leur ecrire directement.
-
-Tout fonctionne **entre serveurs** car la logique vit sur le proxy BungeeCord, point unique qui voit l'ensemble du reseau.
-
-## Release
-
-Telechargez les fichiers JAR depuis la page des [releases](https://github.com/herocraftlol/Bungeefriends-Message-Mail/releases).

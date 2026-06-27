@@ -23,6 +23,13 @@ public class CrossFriendsSpigotPlugin extends JavaPlugin {
         getServer().getMessenger().registerIncomingPluginChannel(this, CHANNEL, new FriendsGuiMessenger(this));
         getServer().getPluginManager().registerEvents(new FriendsMenuListener(this), this);
 
+        var friendCommand = getCommand("friend");
+        if (friendCommand != null) {
+            friendCommand.setExecutor(new FriendSpigotCommand(this));
+        } else {
+            getLogger().warning("La commande 'friend' n'a pas pu etre enregistree (absente du plugin.yml ?).");
+        }
+
         getLogger().info("CrossFriends-GUI active.");
     }
 

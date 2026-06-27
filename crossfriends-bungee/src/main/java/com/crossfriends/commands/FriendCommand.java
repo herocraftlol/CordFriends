@@ -3,8 +3,7 @@ package com.crossfriends.commands;
 import com.crossfriends.CrossFriendsPlugin;
 import com.crossfriends.data.DataManager;
 import com.crossfriends.data.PlayerProfile;
-import com.google.common.io.ByteArrayDataOutput;
-import com.google.common.io.ByteStreams;
+import com.crossfriends.gui.FriendGuiOpener;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.chat.ClickEvent;
@@ -384,35 +383,7 @@ public class FriendCommand extends Command implements TabExecutor {
     // ---------------------------------------------------------------
 
     private void handleGui(ProxiedPlayer sender, PlayerProfile profile) {
-        if (profile.getFriends().isEmpty()) {
-            sender.sendMessage(ChatColor.YELLOW + "Vous n'avez pas encore d'amis. Utilisez /friend add <joueur>.");
-            return;
-        }
-        if (sender.getServer() == null) {
-            sender.sendMessage(ChatColor.RED + "Impossible d'ouvrir l'interface pour le moment, reessayez dans un instant.");
-            return;
-        }
-
-        DataManager dm = plugin.getDataManager();
-        ByteArrayDataOutput out = ByteStreams.newDataOutput();
-        out.writeUTF("OPEN_GUI");
-        out.writeInt(profile.getFriends().size());
-
-        for (UUID uuid : profile.getFriends()) {
-            PlayerProfile friendProfile = dm.getProfile(uuid);
-            String name = friendProfile.getName() != null ? friendProfile.getName() : uuid.toString();
-            ProxiedPlayer online = plugin.getProxy().getPlayer(uuid);
-            boolean isOnline = online != null;
-            String server = (isOnline && online.getServer() != null) ? online.getServer().getInfo().getName() : "";
-
-            out.writeUTF(uuid.toString());
-            out.writeUTF(name);
-            out.writeBoolean(isOnline);
-            out.writeUTF(server);
-        }
-
-        sender.getServer().sendData(CrossFriendsPlugin.CHANNEL, out.toByteArray());
-        sender.sendMessage(ChatColor.GRAY + "Ouverture de l'interface d'amis...");
+        FriendGuiOpener.open(plugin, sender);
     }
 
     // ---------------------------------------------------------------

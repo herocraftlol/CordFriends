@@ -67,6 +67,8 @@ public class GuiBridgeListener implements Listener {
             } catch (Exception e) {
                 plugin.getLogger().warning("Message JOIN_REQUEST invalide recu de " + requester.getName());
             }
+        } else if ("OPEN_GUI_REQUEST".equals(action)) {
+            FriendGuiOpener.open(plugin, requester);
         }
     }
 

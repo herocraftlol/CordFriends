@@ -4,11 +4,28 @@ Petit plugin **Spigot/Paper** à installer sur **chaque serveur backend** (et no
 
 ## Fonctionnement
 
-1. Le joueur tape `/friend gui` (commande gérée par le proxy).
+1. Le joueur tape `/friend gui` (commande gérée par le proxy), **ou** déclenche le menu depuis ce serveur Spigot (voir section suivante).
 2. Le proxy envoie la liste de ses amis (nom, statut, serveur) à ce plugin via un canal de plugin-messaging (`crossfriends:main`).
 3. Ce plugin ouvre un inventaire avec une tête de joueur par ami :
    - **Clic gauche** sur un ami en ligne → demande au proxy de vous transférer sur son serveur, puis vous téléporte à côté de lui une fois arrivé.
    - **Clic droit** → affiche un message cliquable qui pré-remplit votre chat avec `/msg <ami> ` pour lui écrire directement (aucune saisie de pseudo à refaire).
+
+## Ouvrir le menu depuis ce serveur (ChestCommands, `/execute as ... run`)
+
+`/friend` (toutes les sous-commandes : `add`, `accept`, `list`...) reste géré par le **proxy** BungeeCord. Mais certains outils (ChestCommands, la commande vanilla `/execute`) n'exécutent que des commandes connues du **serveur Spigot** sur lequel ils tournent, pas celles du proxy.
+
+Pour cette raison, ce module enregistre **aussi** une commande `/friend` côté Spigot, qui ne gère qu'un seul cas : `/friend gui` (et son alias `/friend menu`). Elle relaie simplement la demande au proxy via plugin-messaging (action `OPEN_GUI_REQUEST`), exactement comme le ferait un clic dans le menu — la logique d'amitié reste entièrement côté proxy.
+
+Cela permet :
+
+- **Avec ChestCommands** : configurez une action de type "joueur" (`player: friend gui`) sur un item de menu pour ouvrir directement la liste d'amis.
+- **Avec la commande vanilla** :
+  ```
+  /execute as <joueur ou sélecteur> run friend gui
+  ```
+  par exemple `/execute as @a run friend gui` ou `/execute as Pseudo run friend gui`.
+
+Aucune permission spécifique n'est requise par défaut (la commande répond simplement "seul /friend gui est géré ici" pour tout autre sous-commande, afin de rappeler que `add`/`accept`/`list`/etc. doivent être tapés normalement, traités par le proxy).
 
 ## Pré-requis important : activer le mode proxy
 

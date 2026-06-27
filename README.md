@@ -1,35 +1,36 @@
-# CrossFriends - Plugin BungeeCord
+# CrossFriends — Amis, messages prives et courrier inter-serveur
 
-----
+Deux modules Maven independants :
 
-**CrossFriends** : BungeeCord plugin for friends, private messages and cross-server offline mail.
+| Dossier | Ou l'installer | Obligatoire ? |
+|---|---|---|
+| `crossfriends-bungee/` | Sur le **proxy BungeeCord** | Oui — contient toute la logique |
+| `crossfriends-spigot/` | Sur **chaque serveur backend** (Spigot/Paper) | Non — ajoute juste l'interface graphique `/friend gui` |
 
-## Features
+Voir le `README.md` de chaque dossier pour le detail des commandes, de la configuration et des instructions de compilation/installation.
 
-- [FR] Écouches différents sur différents serveurs | [EN] Friends added on different servers
-- [FR] Envoyez messages privés entre joueurs sur différents serveurs | [EN] Private messages sent to players on other servers  
-- [FR] Courier hors-ligne système aux joueurs déconnectés | [EN] Offline mail for players when they are disconnected
-- [FR] Répondre facilement aux derniers messages | [EN] Fast reply function
+## Demarrage rapide
 
-## Commands
+```bash
+cd crossfriends-bungee && mvn clean package
+cd ../crossfriends-spigot && mvn clean package
+```
 
-- `/friend add <player>` - Add a friend
-- `/friend remove <player>` - Remove a friend
-- `/friend list` - View your friends
-- `/msg <player> <message>` - Send a private message
-- `/r <message>` - Reply to the last message
-- `/mail send <player> <message>` - Send an offline mail
-- `/mail read` - Read your pending mails
-- `/mail clear` - Clear your mailbox
+Puis :
+1. `crossfriends-bungee/target/crossfriends-bungee.jar` → `plugins/` du proxy BungeeCord → redemarrer le proxy.
+2. (Optionnel) `crossfriends-spigot/target/crossfriends-spigot.jar` → `plugins/` de chaque serveur backend ou vous voulez l'interface graphique → verifier `bungeecord: true` dans `spigot.yml` → redemarrer.
 
-## Installation
+## Ce que ca apporte
 
-1. Download `crossfriends-bungee-1.0.0.jar`
-2. Place it in the `plugins/` folder of your BungeeCord server
-3. Restart your server
+- **Amis** : `/friend add|accept|deny|remove|list|requests`, avec boutons cliquables a la reception d'une demande.
+- **Blocage** : `/friend block|unblock|blocked` — un joueur bloque ne peut plus envoyer de demande d'ami, de message prive ni de mail.
+- **Messages prives inter-serveur** : `/msg`, `/r` — livres instantanement si le destinataire est en ligne (n'importe quel serveur), sinon sauvegardes comme courrier.
+- **Courrier hors-ligne pour tous** : `/mail send|read|clear` — par defaut ouvert a n'importe quel joueur, ami ou non (reglable).
+- **Autocompletion (tab)** sur toutes les commandes : sous-commandes puis noms de joueurs pertinents.
+- **Interface graphique** (module Spigot) : `/friend gui` ouvre un menu avec vos amis, pour les rejoindre en un clic ou leur ecrire directement.
 
-The plugin will automatically create the `config.yml` configuration file.
+Tout fonctionne **entre serveurs** car la logique vit sur le proxy BungeeCord, point unique qui voit l'ensemble du reseau.
 
 ## Release
 
-This is release v1.0.0. The jar file can be downloaded from the [RELEASE](https://github.com/abelliardadresse-alt/Bungeefriends-Message-Mail/releases/tag/v1.0.0) page.
+Telechargez les fichiers JAR depuis la page des [releases](https://github.com/herocraftlol/Bungeefriends-Message-Mail/releases).

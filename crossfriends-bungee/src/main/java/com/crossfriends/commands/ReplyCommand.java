@@ -48,6 +48,11 @@ public class ReplyCommand extends Command {
 
         String message = String.join(" ", Arrays.asList(args));
 
+        if (dm.isBlocked(player.getUniqueId(), lastUuid)) {
+            player.sendMessage(ChatColor.RED + "Impossible de repondre a ce joueur (bloque).");
+            return;
+        }
+
         if (plugin.isRequireFriendship() && !player.hasPermission("crossfriends.bypass")) {
             PlayerProfile senderProfile = dm.getProfile(player.getUniqueId());
             if (!senderProfile.getFriends().contains(lastUuid)) {

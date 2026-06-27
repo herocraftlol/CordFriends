@@ -153,6 +153,16 @@ public class DataManager {
         }
     }
 
+    /** Vrai si a a bloque b OU si b a bloque a (le blocage est toujours bidirectionnel en pratique). */
+    public boolean isBlocked(UUID a, UUID b) {
+        PlayerProfile profileA = getProfile(a);
+        if (profileA.getBlocked().contains(b)) {
+            return true;
+        }
+        PlayerProfile profileB = getProfile(b);
+        return profileB.getBlocked().contains(a);
+    }
+
     // ---------------------------------------------------------------
     // Dernier interlocuteur (pour /r), garde uniquement en memoire
     // ---------------------------------------------------------------

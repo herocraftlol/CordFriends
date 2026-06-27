@@ -1,0 +1,13 @@
+# ==========================================
+#  CrossFriends - Configuration
+# ==========================================
+
+# Si true : les joueurs doivent etre amis pour pouvoir
+# s'envoyer des messages prives (/msg, /r) et se laisser
+# des messages hors-ligne (/mail send).
+# Les joueurs avec la permission "crossfriends.bypass" ne sont pas concernes.
+require-friendship: true
+
+# Affiche un recapitulatif (demandes d'amis en attente + courrier non lu)
+# quelques secondes apres la connexion du joueur sur le reseau.
+notify-on-join: true

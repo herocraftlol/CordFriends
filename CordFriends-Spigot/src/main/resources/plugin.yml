@@ -1,0 +1,10 @@
+name: CordFriends-Spigot
+main: com.cordfriends.spigot.CrossFriendsSpigotPlugin
+version: 1.0.0
+api-version: '1.21'
+author: Claude
+description: Interface graphique d'amis pour CordFriends. Necessite le plugin proxy CordFriends installe sur BungeeCord.
+commands:
+  friend:
+    description: Ouvre le menu d'amis (relaie vers le plugin proxy CordFriends). Seul "/friend gui" est gere ici.
+    usage: /friend gui

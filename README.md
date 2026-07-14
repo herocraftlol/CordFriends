@@ -3,13 +3,21 @@
 Transform your BungeeCord network with a complete friend system, cross-server private messages, and an intuitive GUI! 🚀
 
 
+## 📦 Modules
+
+This is a multi-module Maven project:
+
+- **crossfriends-bungee**: Main BungeeCord plugin (friends, messages, mail logic)
+- **crossfriends-spigot**: Spigot/Paper module (GUI interface)
+
+
 ## 📦 Installation
 
 The installation is simple:
 
 
 ### 1️⃣ BungeeCord Side
-📂 Place the plugin in the folder:
+📂 Place `CordFriends-Bungee-1.1.0.jar` in the folder:
 
 
 ```
@@ -21,7 +29,7 @@ Then restart your BungeeCord proxy.
 
 
 ### 2️⃣ Spigot / Paper Side
-Install the Spigot/Paper version of the plugin on each server in your network.
+📂 Place `CordFriends-Spigot-1.1.0.jar` on each server in your network.
 
 
 After installation, restart each server for all features to work.
@@ -160,6 +168,9 @@ Download the JAR files from the page [releases](https://github.com/herocraftlol/
 ## 🛠️ Compilation
 
 ```bash
-cd crossfriends-bungee && mvn clean package
-cd ../crossfriends-spigot && mvn clean package
+mvn clean package
 ```
+
+This will build both modules:
+- `crossfriends-bungee/target/CordFriends-Bungee-1.1.0.jar`
+- `crossfriends-spigot/target/CordFriends-Spigot-1.1.0.jar`

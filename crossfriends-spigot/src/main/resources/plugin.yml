@@ -1,0 +1,6 @@
+name: CrossFriends-GUI
+main: com.crossfriends.spigot.CrossFriendsSpigotPlugin
+version: 1.0.0
+api-version: '1.21'
+author: Claude
+description: Interface graphique d'amis pour CrossFriends. Necessite le plugin proxy CrossFriends installe sur BungeeCord.

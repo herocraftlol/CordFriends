@@ -1,15 +1,17 @@
-package com.crossfriends.commands;
+package com.cordfriends.commands;
 
-import com.crossfriends.CrossFriendsPlugin;
-import com.crossfriends.data.DataManager;
-import com.crossfriends.data.MailMessage;
-import com.crossfriends.data.PlayerProfile;
+import com.cordfriends.CrossFriendsPlugin;
+import com.cordfriends.data.DataManager;
+import com.cordfriends.data.MailMessage;
+import com.cordfriends.data.PlayerProfile;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
+import net.md_5.bungee.api.plugin.TabExecutor;
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,7 +22,7 @@ import java.util.UUID;
  * message est automatiquement sauvegarde comme courrier et lui sera presente
  * a sa prochaine connexion.
  */
-public class MsgCommand extends Command {
+public class MsgCommand extends Command implements TabExecutor {
 
     private final CrossFriendsPlugin plugin;
 
@@ -58,6 +60,11 @@ public class MsgCommand extends Command {
         }
         UUID targetUuid = targetUuidOpt.get();
 
+        if (dm.isBlocked(player.getUniqueId(), targetUuid)) {
+            player.sendMessage(ChatColor.RED + "Impossible d'envoyer un message a " + targetName + " (joueur bloque).");
+            return;
+        }
+
         if (plugin.isRequireFriendship() && !player.hasPermission("crossfriends.bypass")) {
             PlayerProfile senderProfile = dm.getProfile(player.getUniqueId());
             if (!senderProfile.getFriends().contains(targetUuid)) {
@@ -85,5 +92,13 @@ public class MsgCommand extends Command {
             player.sendMessage(ChatColor.YELLOW + targetName
                     + " est hors-ligne. Votre message a ete sauvegarde et lui sera remis a sa connexion.");
         }
+    }
+
+    @Override
+    public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
+        if (args.length == 1) {
+            return TabCompleteUtil.onlinePlayerNames(plugin, args[0]);
+        }
+        return Collections.emptyList();
     }
 }

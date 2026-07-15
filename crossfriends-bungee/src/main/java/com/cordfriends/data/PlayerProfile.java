@@ -1,4 +1,4 @@
-package com.crossfriends.data;
+package com.cordfriends.data;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -18,6 +18,7 @@ public class PlayerProfile {
     private Set<UUID> friends = new HashSet<>();
     private Set<UUID> incomingRequests = new HashSet<>();
     private Set<UUID> outgoingRequests = new HashSet<>();
+    private Set<UUID> blocked = new HashSet<>();
     private List<MailMessage> mailbox = new ArrayList<>();
 
     /** Constructeur vide requis par Gson pour la deserialisation. */
@@ -51,6 +52,10 @@ public class PlayerProfile {
 
     public Set<UUID> getOutgoingRequests() {
         return outgoingRequests;
+    }
+
+    public Set<UUID> getBlocked() {
+        return blocked;
     }
 
     public List<MailMessage> getMailbox() {

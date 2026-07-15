@@ -1,6 +1,6 @@
-package com.crossfriends.data;
+package com.cordfriends.data;
 
-import com.crossfriends.CrossFriendsPlugin;
+import com.cordfriends.CrossFriendsPlugin;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
@@ -151,6 +151,16 @@ public class DataManager {
         if (profile != null) {
             saveProfile(profile);
         }
+    }
+
+    /** Vrai si a a bloque b OU si b a bloque a (le blocage est toujours bidirectionnel en pratique). */
+    public boolean isBlocked(UUID a, UUID b) {
+        PlayerProfile profileA = getProfile(a);
+        if (profileA.getBlocked().contains(b)) {
+            return true;
+        }
+        PlayerProfile profileB = getProfile(b);
+        return profileB.getBlocked().contains(a);
     }
 
     // ---------------------------------------------------------------

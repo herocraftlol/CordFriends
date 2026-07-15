@@ -1,4 +1,4 @@
-# 🤝 CordFriends - Friend System for BungeeCord
+# 🤝 CordFriends v1.1.2 - Friend System for BungeeCord
 
 Transformez votre réseau BungeeCord avec un système d'amis complet, des messages privés inter-serveurs et une interface graphique intuitive ! 🚀
 

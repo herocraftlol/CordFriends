@@ -1,9 +1,9 @@
-package com.crossfriends.commands;
+package com.cordfriends.commands;
 
-import com.crossfriends.CrossFriendsPlugin;
-import com.crossfriends.data.DataManager;
-import com.crossfriends.data.MailMessage;
-import com.crossfriends.data.PlayerProfile;
+import com.cordfriends.CrossFriendsPlugin;
+import com.cordfriends.data.DataManager;
+import com.cordfriends.data.MailMessage;
+import com.cordfriends.data.PlayerProfile;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -47,6 +47,11 @@ public class ReplyCommand extends Command {
         }
 
         String message = String.join(" ", Arrays.asList(args));
+
+        if (dm.isBlocked(player.getUniqueId(), lastUuid)) {
+            player.sendMessage(ChatColor.RED + "Impossible de repondre a ce joueur (bloque).");
+            return;
+        }
 
         if (plugin.isRequireFriendship() && !player.hasPermission("crossfriends.bypass")) {
             PlayerProfile senderProfile = dm.getProfile(player.getUniqueId());

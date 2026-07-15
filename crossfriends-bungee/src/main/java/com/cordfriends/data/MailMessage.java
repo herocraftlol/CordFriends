@@ -1,4 +1,4 @@
-package com.crossfriends.data;
+package com.cordfriends.data;
 
 import java.util.UUID;
 

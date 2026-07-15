@@ -1,9 +1,9 @@
-package com.crossfriends.listeners;
+package com.cordfriends.listeners;
 
-import com.crossfriends.CrossFriendsPlugin;
-import com.crossfriends.data.DataManager;
-import com.crossfriends.data.MailMessage;
-import com.crossfriends.data.PlayerProfile;
+import com.cordfriends.CrossFriendsPlugin;
+import com.cordfriends.data.DataManager;
+import com.cordfriends.data.MailMessage;
+import com.cordfriends.data.PlayerProfile;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;

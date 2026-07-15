@@ -1,18 +1,21 @@
-package com.crossfriends.commands;
+package com.cordfriends.commands;
 
-import com.crossfriends.CrossFriendsPlugin;
-import com.crossfriends.data.DataManager;
-import com.crossfriends.data.MailMessage;
-import com.crossfriends.data.PlayerProfile;
+import com.cordfriends.CrossFriendsPlugin;
+import com.cordfriends.data.DataManager;
+import com.cordfriends.data.MailMessage;
+import com.cordfriends.data.PlayerProfile;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Command;
+import net.md_5.bungee.api.plugin.TabExecutor;
 
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -20,8 +23,13 @@ import java.util.UUID;
  * /mail send <joueur> <message> - laisser un message qu'un joueur verra a sa prochaine connexion
  * /mail read                    - lire son courrier en attente
  * /mail clear                   - vider sa boite de reception
+ *
+ * Par defaut (mail-require-friendship: false dans config.yml), on peut laisser
+ * un mail a n'importe quel joueur deja vu sur le reseau, ami ou non.
  */
-public class MailCommand extends Command {
+public class MailCommand extends Command implements TabExecutor {
+
+    private static final List<String> SUBCOMMANDS = Arrays.asList("send", "read", "clear");
 
     private final CrossFriendsPlugin plugin;
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM HH:mm");
@@ -44,7 +52,7 @@ public class MailCommand extends Command {
             return;
         }
 
-        switch (args[0].toLowerCase()) {
+        switch (args[0].toLowerCase(Locale.ROOT)) {
             case "send":
                 if (args.length < 3) {
                     player.sendMessage(ChatColor.RED + "Usage : /mail send <joueur> <message>");
@@ -81,7 +89,12 @@ public class MailCommand extends Command {
         }
         UUID targetUuid = targetUuidOpt.get();
 
-        if (plugin.isRequireFriendship() && !player.hasPermission("crossfriends.bypass")) {
+        if (dm.isBlocked(player.getUniqueId(), targetUuid)) {
+            player.sendMessage(ChatColor.RED + "Impossible de laisser un message a " + targetName + " (joueur bloque).");
+            return;
+        }
+
+        if (plugin.isMailRequireFriendship() && !player.hasPermission("crossfriends.bypass")) {
             PlayerProfile senderProfile = dm.getProfile(player.getUniqueId());
             if (!senderProfile.getFriends().contains(targetUuid)) {
                 player.sendMessage(ChatColor.RED + "Vous devez etre ami avec " + targetName + " pour lui laisser un message.");
@@ -137,5 +150,17 @@ public class MailCommand extends Command {
         player.sendMessage(ChatColor.AQUA + "/mail send <joueur> <message>" + ChatColor.GRAY + " - Laisser un message a voir plus tard");
         player.sendMessage(ChatColor.AQUA + "/mail read" + ChatColor.GRAY + " - Lire vos messages en attente");
         player.sendMessage(ChatColor.AQUA + "/mail clear" + ChatColor.GRAY + " - Vider votre boite de reception");
+    }
+
+    @Override
+    public Iterable<String> onTabComplete(CommandSender sender, String[] args) {
+        if (args.length <= 1) {
+            String partial = args.length == 0 ? "" : args[0];
+            return TabCompleteUtil.filterKeywords(SUBCOMMANDS, partial);
+        }
+        if (args.length == 2 && args[0].equalsIgnoreCase("send")) {
+            return TabCompleteUtil.onlinePlayerNames(plugin, args[1]);
+        }
+        return Collections.emptyList();
     }
 }

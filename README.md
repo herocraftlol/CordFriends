@@ -1,15 +1,15 @@
-# 🤝 CordFriends - Friend System for BungeeCord
+# 🤝 CordFriends v1.1.1 - Friend System for BungeeCord
 
-Transformez votre réseau BungeeCord avec un système d'amis complet, des messages privés inter-serveurs et une interface graphique intuitive ! 🚀
+Transform your BungeeCord network with a complete friend system, cross-server private messages, and an intuitive GUI! 🚀
 
 
 ## 📦 Installation
 
-L'installation est simple :
+The installation is simple:
 
 
-### 1️⃣ Côté BungeeCord
-📂 Placez le plugin dans le dossier :
+### 1️⃣ BungeeCord Side
+📂 Place the plugin in the folder:
 
 
 ```
@@ -17,25 +17,25 @@ L'installation est simple :
 ```
 
 
-Puis redémarrez votre proxy BungeeCord.
+Then restart your BungeeCord proxy.
 
 
-### 2️⃣ Côté Spigot / Paper
-Installez également la version Spigot/Paper du plugin sur chaque serveur de votre réseau.
+### 2️⃣ Spigot / Paper Side
+Install the Spigot/Paper version of the plugin on each server in your network.
 
 
-Après l'installation, redémarrez chaque serveur afin que toutes les fonctionnalités soient opérationnelles.
+After installation, restart each server for all features to work.
 
 
-⚠️ Les deux parties (BungeeCord + Spigot/Paper) sont obligatoires pour un fonctionnement complet.
+⚠️ Both parts (BungeeCord + Spigot/Paper) are required for full functionality.
 
 
-## ✅ Compatibilité
+## ✅ Compatibility
 
-🖥️ Compatible avec ChestCommands
+🖥️ Compatible with ChestCommands
 
 
-Pour ouvrir directement l'interface graphique, utilisez la commande :
+To open the GUI directly, use the command:
 
 
 ```
@@ -43,9 +43,9 @@ op: execute as @s run friend gui
 ```
 
 
-## 👥 Système d'amis
+## 👥 Friend System
 
-Gérez facilement votre liste d'amis avec :
+Manage your friend list easily:
 
 
 ```
@@ -57,12 +57,12 @@ Gérez facilement votre liste d'amis avec :
 /friend requests
 ```
 
-✨ Lorsqu'un joueur vous envoie une demande d'ami, des boutons cliquables permettent d'accepter ou de refuser instantanément.
+✨ When a player sends you a friend request, clickable buttons allow you to accept or refuse instantly.
 
 
-## 🚫 Système de blocage
+## 🚫 Blocking System
 
-Empêchez certains joueurs de vous contacter :
+Prevent certain players from contacting you:
 
 
 ```
@@ -71,17 +71,17 @@ Empêchez certains joueurs de vous contacter :
 /friend blocked
 ```
 
-Un joueur bloqué ne pourra plus :
+A blocked player cannot:
 
 
-❌ Vous envoyer une demande d'ami
-❌ Vous envoyer un message privé
-❌ Vous envoyer un courrier
+❌ Send you a friend request
+❌ Send you a private message
+❌ Send you mail
 
 
-## 💬 Messages privés inter-serveurs
+## 💬 Cross-Server Private Messages
 
-Communiquez avec n'importe quel joueur du réseau grâce aux commandes :
+Communicate with any player on the network:
 
 
 ```
@@ -89,15 +89,15 @@ Communiquez avec n'importe quel joueur du réseau grâce aux commandes :
 /r
 ```
 
-⚡ Les messages sont envoyés instantanément, même si le joueur se trouve sur un autre serveur.
+⚡ Messages are sent instantly, even if the player is on another server.
 
 
-📬 Si le destinataire est hors ligne, le message est automatiquement enregistré en courrier.
+📬 If the recipient is offline, the message is automatically saved as mail.
 
 
-## ✉️ Courrier hors-ligne
+## ✉️ Offline Mail
 
-Envoyez des messages même lorsqu'un joueur est déconnecté :
+Send messages even when a player is disconnected:
 
 
 ```
@@ -106,55 +106,91 @@ Envoyez des messages même lorsqu'un joueur est déconnecté :
 /mail clear
 ```
 
-Par défaut, tous les joueurs peuvent envoyer un courrier, qu'ils soient amis ou non.
+By default, all players can send mail, whether they are friends or not.
 
 
-⚙️ Ce comportement est entièrement configurable.
+⚙️ This behavior is fully configurable.
 
 
-## 🎯 Auto-complétion intelligente
+## 🎯 Smart Auto-Complete
 
-Toutes les commandes disposent d'une auto-complétion (TAB) :
-
-
-✅ Sous-commandes
-✅ Noms des joueurs concernés
+All commands have TAB completion:
 
 
-Une utilisation beaucoup plus rapide et agréable.
+✅ Subcommands
+✅ Player names
 
 
-## 🖥️ Interface graphique
+A much faster and more enjoyable experience.
 
-Ouvrez le menu avec :
+
+## 🖥️ GUI Interface
+
+Open the menu with:
 
 
 ```
 /friend gui
 ```
 
-Depuis cette interface, vous pouvez :
+From this interface, you can:
 
 
-👥 Voir votre liste d'amis
-🎮 Rejoindre un ami en un clic
-💬 Lui envoyer un message privé directement
+👥 View your friend list
+🎮 Join a friend with one click
+💬 Send them a private message directly
 
 
-## 🌐 Fonctionnement sur tout le réseau
+## 🧩 Developer API — Open the GUI from another plugin
 
-Toute la logique du plugin est gérée directement par BungeeCord, qui centralise les informations de l'ensemble de votre réseau.
+You don't need a player to type `/friend gui` in chat to open the friends menu. Any other
+Spigot/Paper plugin on a backend server (for example a plugin that opens the menu when a
+player clicks a custom item) can trigger it directly:
+
+```java
+// 1. Add the dependency to your plugin.yml
+// depend: [CrossFriends-GUI]      // or softdepend: [CrossFriends-GUI] for an optional integration
+
+// 2. Call the API wherever you need it (e.g. in an item click listener)
+import com.crossfriends.spigot.api.CrossFriendsSpigotAPI;
+
+@EventHandler
+public void onClick(PlayerInteractEvent event) {
+    if (isYourFriendsMenuItem(event.getItem())) {
+        CrossFriendsSpigotAPI.openFriendsGui(event.getPlayer());
+    }
+}
+```
+
+This simply relays the request to the BungeeCord proxy (the source of truth for friend
+data), which builds the friend list and sends back the packet that actually opens the
+inventory — exactly like `/friend gui` does, just without going through chat.
+
+If you're writing a plugin for the **BungeeCord proxy itself** (not a backend server) and
+already have a `ProxiedPlayer` reference, you can skip the network hop entirely and call
+the same service the command uses:
+
+```java
+import com.crossfriends.gui.GuiService;
+
+GuiService.Result result = GuiService.openFriendsGui(crossFriendsPluginInstance, proxiedPlayer);
+// result is one of: OPENED, NO_FRIENDS, NOT_CONNECTED
+```
+
+## 🌐 Network-Wide Functionality
+
+All plugin logic is handled directly by BungeeCord, which centralizes information across your entire network.
 
 
-Cela permet de profiter de toutes les fonctionnalités entre tous vos serveurs, de manière totalement transparente.
+This allows you to enjoy all features between all your servers, completely transparently.
 
 
-✨ Une seule installation sur le proxy suffit pour synchroniser les amis, les messages privés et le courrier sur l'ensemble du réseau.
+✨ One installation on the proxy is enough to synchronize friends, private messages, and mail across the entire network.
 
 
-## 📥 Téléchargement
+## 📥 Download
 
-Téléchargez les fichiers JAR depuis la page des [releases](https://github.com/herocraftlol/CordFriends/releases).
+Download the JAR files from the page [releases](https://github.com/herocraftlol/CordFriends/releases).
 
 
 ## 🛠️ Compilation

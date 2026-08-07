@@ -1,7 +1,17 @@
 # 🤝 CordFriends - Friend System for BungeeCord
 
-Transformez votre réseau BungeeCord avec un système d'amis complet, des messages privés inter-serveurs et une interface graphique intuitive ! 🚀
+**CordFriends** est un plugin BungeeCord qui ajoute un système d'amis complet à votre réseau Minecraft. Il permet aux joueurs d'ajouter des amis, de s'envoyer des messages privés inter-serveurs et de gérer un système de courrier hors-ligne.
 
+✨ **Fonctionnalités principales :**
+- 👥 Système d'amis complet avec boutons cliquables
+- 💬 Messages privés inter-serveurs
+- ✉️ Courrier hors-ligne
+- 🚫 Système de blocage
+- 🎯 Auto-complétion intelligente
+- 🖥️ Interface graphique intuitive
+- 🌐 Synchronisation sur tout le réseau
+
+📥 **Téléchargez la dernière version sur la page des [releases](https://github.com/herocraftlol/CordFriends/releases) !**
 
 ## 📦 Installation
 
